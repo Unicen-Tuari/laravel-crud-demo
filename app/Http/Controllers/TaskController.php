@@ -29,7 +29,10 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $this->authorize('create', Task::class);
+        return view('tasks.create', [
+            'users' => \App\Models\User::all()
+        ]);
     }
 
     /**
@@ -40,6 +43,7 @@ class TaskController extends Controller
      */
     public function store(CreateTaskRequest $request)
     {
+        $this->authorize('create', Task::class);
         $input = $request->all();
         $input['done'] = false;
         Task::create($input);
@@ -67,6 +71,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        $this->authorize('update', $task);
         return view('tasks.edit', [
             'task' => $task
         ]);
@@ -81,10 +86,11 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
+        $this->authorize('update', $task);
         $input = $request->all();
         $input['done'] = $input['done'] ?? 0;
         $task->update($input);
-        return back();
+        return back()->with('success', 'Tarea actualizada!');;
     }
 
     /**

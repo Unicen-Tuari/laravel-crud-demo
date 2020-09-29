@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -27,7 +28,8 @@ class TaskFactory extends Factory
             'name' => $this->faker->text,
             'description' => $this->faker->text(),
             'done' => $this->faker->boolean,
-            'category_id' => Category::factory()->create()
+            'category_id' => Category::factory()->create(),
+            'user_id' => User::factory()->create(),
         ];
     }
 }

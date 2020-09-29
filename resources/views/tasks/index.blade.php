@@ -7,7 +7,7 @@
       </h2>
     </div>
     <div class="mt-5 flex lg:mt-0 lg:ml-4">
-      
+      @can('create', \App\Models\Task::class)
       <span class="sm:ml-3 shadow-sm rounded-md">
         <a href="{{ route('tasks.create') }}">
           <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out">
@@ -17,6 +17,7 @@
           </button>
         </a>
       </span>
+      @endcan
 
     </div>
   </div>
@@ -36,10 +37,10 @@
                   Nombre
                 </th>
                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Fecha
+                  Titulo
                 </th>
                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  Descripción
+                  Fecha
                 </th>
                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                   Estado
@@ -53,20 +54,23 @@
                 <td class="px-6 py-4 whitespace-no-wrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
-                      <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
+                      <img class="h-10 w-10 rounded-full" src="{{ $task->user->getProfilePhotoUrlAttribute() }}" alt="">
                     </div>
                     <div class="ml-4">
-                      <div class="text-sm leading-5 font-medium text-gray-900">
-                        {{ $task->name }}
-                      </div>
+                      {{ $task->user->name }}
                     </div>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                  {{ $task->created_at }}
+                  <div class="truncate ... text-sm leading-5 font-medium text-gray-900">
+                    {{ Str::limit($task->name,25 ) }}
+                  </div>
+                  <div class="text-sm leading-5 text-gray-500">
+                    <div class="truncate ...">{{ Str::limit($task->description,35 ) }}</div>
+                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap">
-                  <div class="text-sm leading-5 text-gray-900">{{ $task->description }}</div>
+                  <div class="truncate ... text-sm leading-5 text-gray-900">{{ $task->created_at }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap">
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full @if($task->done) bg-green-100 text-green-800 @else bg-yellow-100 text-yellow-800 @endif">
@@ -78,23 +82,26 @@
                   </span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                @if($task->done)
-                  <form action="{{ route('tasks.update', $task->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button class="text-indigo-600 hover:text-indigo-900" type="submit">Marcar sin resolver</button>
-                  </form>
-                @else
-                  <form action="{{ route('tasks.update', $task->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="done" value="on">
-                    <button class="text-indigo-600 hover:text-indigo-900" type="submit">Resolver</button>
-                  </form>
+                <a href="{{ route('tasks.show', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver detalle</a>
+                @can('update', $task)
+                  @if($task->done)
+                    <form action="{{ route('tasks.update', $task->id) }}" method="POST">
+                      @csrf
+                      @method('PUT')
+                      <button class="text-indigo-600 hover:text-indigo-900" type="submit">Marcar sin resolver</button>
+                    </form>
+                  @else
+                    <form action="{{ route('tasks.update', $task->id) }}" method="POST">
+                      @csrf
+                      @method('PUT')
+                      <input type="hidden" name="done" value="on">
+                      <button class="text-indigo-600 hover:text-indigo-900" type="submit">Resolver</button>
+                    </form>
                 @endif
+
                   
-                  <a href="{{ route('tasks.show', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">Ver detalle</a>
-                  <a href="{{ route('tasks.edit', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                    <a href="{{ route('tasks.edit', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                  @endcan
                   <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
                     @csrf
                     @method('DELETE')

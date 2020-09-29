@@ -23,4 +23,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::resource('tasks', TaskController::class);
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    
+    Route::resource('tasks', TaskController::class);
+
+});

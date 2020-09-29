@@ -20,6 +20,7 @@ class CreateTasksTable extends Migration
             $table->boolean('done');
             $table->timestamps();
             $table->foreignId('category_id')->nullable();
+            $table->foreignId('user_id');
         });
     }
 

@@ -27,7 +27,8 @@ class UpdateTaskRequest extends FormRequest
         return [
             'name' => 'string',
             'description' => 'string',
-            'done' => Rule::in('on','off')
+            'done' => Rule::in('on','off'),
+            'user_id' => 'exists:App\Models\User,id',
         ];
     }
 }
