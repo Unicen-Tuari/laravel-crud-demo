@@ -29,7 +29,8 @@ class TaskFactory extends Factory
             'description' => $this->faker->text(),
             'done' => $this->faker->boolean,
             'category_id' => Category::factory()->create(),
-            'user_id' => User::factory()->create(),
+            'assigned_to' => User::factory()->create(),
+            'created_by' => User::factory()->create(),
         ];
     }
 }

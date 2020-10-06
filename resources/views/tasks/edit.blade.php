@@ -10,7 +10,7 @@
       </p>
         </div>
     </div>
-          
+
 
     <div class="mt-5 md:mt-0 md:col-span-2">
         @if (session('success'))
@@ -35,7 +35,7 @@
                               </label>
                             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="name" name="name" type="text" value="{{ old('name') ?? $task->name }}" >
                             @error('name')
-                              <div class="text-red-600">{{ $message }}</div> 
+                              <div class="text-red-600">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-span-6 sm:col-span-4">
@@ -44,9 +44,31 @@
                               </label>
                             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="description" name="description" type="text" value="{{ old('description') ?? $task->description }}" >
                             @error('description')
-                              <div class="text-red-600">{{ $message }}</div> 
+                              <div class="text-red-600">{{ $message }}</div>
                             @enderror
                         </div>
+                        @can('assign', App\Models\Task::class)
+                        <div class="col-span-6 sm:col-span-4">
+                            <label class="block font-medium text-sm text-gray-700" for="description">
+                                  Asignación
+                              </label>
+                              <div class="inline-block relative w-64">
+                                <select name="assigned_to" id="assigned_to" required
+                                  class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                    <option disabled @if(!$task->assignee) selected @endif>Seleccione un usuario</option>
+                                    @foreach($users as $user)
+                                      <option value="{{$user->id}}" @if($task->assignee && $task->assignee->id === $user->id) selected @endif>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                  <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                </div>
+                              </div>
+                            @error('assigned_to')
+                              <div class="text-red-600">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        @endcan
                         <div class="col-span-6 sm:col-span-4">
                             <label class="block font-medium text-sm text-gray-700" for="description">
                                   Estado
@@ -56,7 +78,7 @@
                               <span class="ml-2 text-sm text-gray-600">Hecho</span>
                           </label>
                           @error('done')
-                            <div class="text-red-600">{{ $message }}</div> 
+                            <div class="text-red-600">{{ $message }}</div>
                           @enderror
                         </div>
                     </div>

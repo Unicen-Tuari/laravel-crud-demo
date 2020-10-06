@@ -31,7 +31,8 @@ class TaskPolicy
      */
     public function view(User $user, Task $task)
     {
-        return true;
+        return $user->id === $task->author->id ||
+            ($task->assignee && $user->id === $task->assignee->id);
     }
 
     /**
@@ -42,7 +43,7 @@ class TaskPolicy
      */
     public function create(User $user)
     {
-        return $user->role == 'manager';
+        return $user->isManager();
     }
 
     /**
@@ -54,7 +55,8 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        return $user->id === $task->user->id;
+        return $user->id === $task->author->id ||
+            ($task->assignee && $user->id === $task->assignee->id);
     }
 
     /**
@@ -91,5 +93,10 @@ class TaskPolicy
     public function forceDelete(User $user, Task $task)
     {
         return true;
+    }
+
+    public function assign(User $user)
+    {
+        return $user->isManager();
     }
 }

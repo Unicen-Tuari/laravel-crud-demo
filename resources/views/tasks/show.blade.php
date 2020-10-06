@@ -10,7 +10,7 @@
         Tarea {{ $task->id }}
       </h3>
       <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-        
+
       </p>
     </div>
     <div>
@@ -23,7 +23,7 @@
             {{ $task->name }}
           </dd>
         </div>
-        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm leading-5 font-medium text-gray-500">
             Descripción
           </dt>
@@ -33,13 +33,21 @@
         </div>
         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm leading-5 font-medium text-gray-500">
-            Usuario
+            Usuario asignado
           </dt>
           <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ $task->user->name }}
+            {{ $task->assignee->name }}
           </dd>
         </div>
         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm leading-5 font-medium text-gray-500">
+            Creador
+          </dt>
+          <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+            {{ $task->author->name }}
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm leading-5 font-medium text-gray-500">
             Fecha
           </dt>
@@ -47,7 +55,7 @@
             {{ $task->created_at }}
           </dd>
         </div>
-        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm leading-5 font-medium text-gray-500">
             Estado
           </dt>
@@ -66,5 +74,5 @@
     </div>
   </div>
 
-  
+
 </x-tasks>

@@ -19,8 +19,10 @@ class CreateTasksTable extends Migration
             $table->string('description');
             $table->boolean('done');
             $table->timestamps();
-            $table->foreignId('category_id')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignId('category_id')->nullable()->constrained();
+            $table->foreignId('assigned_to')->nullable()->constrained('users');
+            $table->foreignId('created_by')->nullable()->constrained('users');
+
         });
     }
 

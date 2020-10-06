@@ -14,9 +14,12 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::orderBy('created_at', 'desc')->get();
+        $this->authorize('viewAny', Task::class);
+        $tasks = Task::where('created_by', $request->user()->id)
+            ->orWhere('assigned_to', $request->user()->id)
+            ->orderBy('created_at', 'desc')->get();
         return view('tasks.index', [
             'tasks' => $tasks
         ]);
@@ -46,6 +49,7 @@ class TaskController extends Controller
         $this->authorize('create', Task::class);
         $input = $request->all();
         $input['done'] = false;
+        $input['created_by'] = $request->user()->id;
         Task::create($input);
         return redirect('tasks');
     }
@@ -58,6 +62,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        $this->authorize('view', $task);
         return view('tasks.show', [
             'task' => $task
         ]);
@@ -73,7 +78,8 @@ class TaskController extends Controller
     {
         $this->authorize('update', $task);
         return view('tasks.edit', [
-            'task' => $task
+            'task' => $task,
+            'users' => \App\Models\User::all(),
         ]);
     }
 

@@ -43,6 +43,9 @@
                   Fecha
                 </th>
                 <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                  Creada por
+                </th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                   Estado
                 </th>
                 <th class="px-6 py-3 bg-gray-50"></th>
@@ -54,10 +57,12 @@
                 <td class="px-6 py-4 whitespace-no-wrap">
                   <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
-                      <img class="h-10 w-10 rounded-full" src="{{ $task->user->getProfilePhotoUrlAttribute() }}" alt="">
+                      @if($task->assignee)
+                      <img class="h-10 w-10 rounded-full" src="{{ $task->assignee->getProfilePhotoUrlAttribute() }}" alt="">
+                      @endif
                     </div>
                     <div class="ml-4">
-                      {{ $task->user->name }}
+                      {{ $task->assignee ? $task->assignee->name : 'Sin asignar' }}
                     </div>
                   </div>
                 </td>
@@ -72,11 +77,14 @@
                 <td class="px-6 py-4 whitespace-no-wrap">
                   <div class="truncate ... text-sm leading-5 text-gray-900">{{ $task->created_at }}</div>
                 </td>
+                  <td class="px-6 py-4 whitespace-no-wrap">
+                      <div class="truncate ... text-sm leading-5 text-gray-900">{{ $task->author->name }}</div>
+                  </td>
                 <td class="px-6 py-4 whitespace-no-wrap">
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full @if($task->done) bg-green-100 text-green-800 @else bg-yellow-100 text-yellow-800 @endif">
                     @if($task->done)
                       Resuelta
-                    @else 
+                    @else
                       Pendiente
                     @endif
                   </span>
@@ -99,7 +107,7 @@
                     </form>
                 @endif
 
-                  
+
                     <a href="{{ route('tasks.edit', $task->id) }}" class="text-indigo-600 hover:text-indigo-900">Editar</a>
                   @endcan
                   <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
@@ -107,7 +115,7 @@
                     @method('DELETE')
                     <button  class="text-indigo-600 hover:text-indigo-900" type="submit">Eliminar</button>
                   </form>
-                  
+
                 </td>
               </tr>
               @endforeach
