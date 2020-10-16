@@ -13,15 +13,13 @@ jobs:
         env:
             POSTGRES_USER: myuser
             POSTGRES_PASSWORD: thisisasecretpassword
-            POSTGRES_DB: tasks_test
+            POSTGRES_DB: laravel
         ports:
             - 5432:5432
    env:
       DB_USERNAME: myuser
       DB_PASSWORD: thisisasecretpassword
       APP_URL: http://127.0.0.1:8000
-      DB_HOST: 127.0.0.1
-      DB_DATABASE: tasks_test
    steps:
    - uses: actions/checkout@v2
    - name: Copy .env
