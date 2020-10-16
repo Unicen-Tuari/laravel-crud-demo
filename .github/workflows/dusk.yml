@@ -20,13 +20,12 @@ jobs:
       DB_USERNAME: myuser
       DB_PASSWORD: thisisasecretpassword
       APP_URL: http://127.0.0.1:8000
-      SELENIUM_URL: http://localhost:9515
       DB_HOST: 127.0.0.1
       DB_DATABASE: tasks_test
    steps:
    - uses: actions/checkout@v2
    - name: Copy .env
-     run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+     run: php copy('.env.example', '.env.dusk.local');"
    - name: Install Dependencies
      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
    - name: Generate key
