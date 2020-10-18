@@ -48,9 +48,22 @@ class TaskController extends Controller
     {
         $this->authorize('create', Task::class);
         $input = $request->all();
+
+        // Save file to disk
+        if($request->has('fileToUpload'))
+        {
+            $filePath = $request->file('fileToUpload')->store('files', [
+                'disk' => 'public'
+            ]);
+            $input['file_path'] = $filePath;
+        }
+
+        // System defined attributes
         $input['done'] = false;
         $input['created_by'] = $request->user()->id;
+
         Task::create($input);
+
         return redirect('tasks');
     }
 

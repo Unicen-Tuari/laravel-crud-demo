@@ -10,10 +10,9 @@
       </p>
         </div>
     </div>
-          
 
     <div class="mt-5 md:mt-0 md:col-span-2">
-        <form method='POST' action="{{ route('tasks.store') }}">
+        <form method='POST' action="{{ route('tasks.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="shadow overflow-hidden sm:rounded-md">
                 <div class="px-4 py-5 bg-white sm:p-6">
@@ -24,7 +23,7 @@
                               </label>
                             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="name" name="name" type="text" value="{{ old('name') }}" >
                             @error('name')
-                              <div class="text-red-600">{{ $message }}</div> 
+                              <div class="text-red-600">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-span-6 sm:col-span-4">
@@ -33,7 +32,7 @@
                               </label>
                             <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="description" name="description" type="text" value="{{ old('description') }}" >
                             @error('description')
-                              <div class="text-red-600">{{ $message }}</div> 
+                              <div class="text-red-600">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-span-6 sm:col-span-4">
@@ -53,7 +52,16 @@
                                 </div>
                               </div>
                             @error('assigned_to')
-                              <div class="text-red-600">{{ $message }}</div> 
+                              <div class="text-red-600">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-span-6 sm:col-span-4">
+                            <label class="block font-medium text-sm text-gray-700" for="fileToUpload">
+                                Archivo asociado
+                            </label>
+                            <input class="form-input rounded-md shadow-sm mt-1 block w-full" id="fileToUpload" name="fileToUpload" type="file" value="{{ old('fileToUpload') }}" multiple>
+                            @error('fileToUpload')
+                            <div class="text-red-600">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>

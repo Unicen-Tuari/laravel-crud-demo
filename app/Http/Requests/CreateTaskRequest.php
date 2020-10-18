@@ -27,6 +27,7 @@ class CreateTaskRequest extends FormRequest
             'name' => 'required',
             'description' => 'required',
             'assigned_to' => ['exists:App\Models\User,id'],
+            'fileToUpload' => 'file|mimes:jpeg,png,pdf|max:1000',
         ];
     }
 }
