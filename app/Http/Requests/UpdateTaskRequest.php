@@ -29,6 +29,7 @@ class UpdateTaskRequest extends FormRequest
             'description' => 'string',
             'done' => Rule::in('on','off'),
             'assigned_to' => 'exists:App\Models\User,id',
+            'fileToUpload' => 'file|mimes:jpeg,png,pdf,txt|max:1000',
         ];
     }
 }

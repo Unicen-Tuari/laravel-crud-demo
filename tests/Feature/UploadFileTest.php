@@ -17,12 +17,13 @@ class UploadFileTest extends TestCase
     {
         Storage::fake('public');
 
-        $file = UploadedFile::fake()->create('test.pdf','1200');
+        $file = UploadedFile::fake()->create('test.txt','1200');
 
         $task = Task::factory()->make()->toArray();
         $task['fileToUpload'] = $file;
 
         $user = User::factory()->create(['role' => 'manager']);
+
         $response = $this->actingAs($user)->post('/tasks', $task);
 
         $response->assertRedirect('/tasks');
