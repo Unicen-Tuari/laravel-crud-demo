@@ -1,0 +1,11 @@
+GET http://localhost:8080/api/user
+Accept: application/json
+Authorization: Bearer OwbGazjTjM839c2vEOgNLL0l5xjfZQKjMygODGFm
+
+###
+
+GET http://localhost:8080/api/tasks
+Accept: application/json
+Authorization: Bearer OwbGazjTjM839c2vEOgNLL0l5xjfZQKjMygODGFm
+
+###

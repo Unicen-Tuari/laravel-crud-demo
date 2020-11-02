@@ -37,7 +37,6 @@ class Task extends Model
 
     public function getPublicFilePathAttribute()
     {
-
         return $this->file_path ? Storage::url($this->file_path) : '';
     }
 
