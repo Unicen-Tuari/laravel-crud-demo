@@ -23,7 +23,24 @@ docker run --rm --interactive --tty \
 ```
 Correr las migraciones
 ```
-docker-compose run app php artisan migrate
+docker-compose run app php artisan migrate --seed
 ```
+Crear el link a storage para que se vean las imagenes adjuntas a las tareas
+```
+docker-compose run app php artisan storage:link
+```
+
 La aplicación esta corriendo en `http://localhost:8080`
+
+Con los seeders se crearon 2 usuarios:
+```
+User: manager@manager.com
+Password: 1234
+Role: Manager
+```
+```
+User: manager@manager.com
+Password: 1234
+Role: User
+```
 
