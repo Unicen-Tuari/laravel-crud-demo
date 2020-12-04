@@ -5,3 +5,25 @@
 ![Dusk Tests](https://github.com/Unicen-Tupar/laravel-crud-demo/workflows/Dusk%20Tests/badge.svg)
 
 # Laravel Task App Example
+## Setup
+Para hacer andar la app localmente hay ejecutar los siguentes comandos:
+Iniciar los containers de docker
+```
+docker-compose up
+```
+Crear el .env
+```
+cp .env.exampe .env
+```
+Bajar las dependencias
+```
+docker run --rm --interactive --tty \
+  --volume $PWD:/app \
+  composer install
+```
+Correr las migraciones
+```
+docker-compose run app php artisan migrate
+```
+La aplicación esta corriendo en `http://localhost:8080`
+
