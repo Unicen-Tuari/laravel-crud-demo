@@ -39,7 +39,7 @@ Password: 1234
 Role: Manager
 ```
 ```
-User: manager@manager.com
+User: test@test.com
 Password: 1234
 Role: User
 ```
